@@ -2,6 +2,8 @@ package db
 
 import (
 	"database/sql"
+
+	. "bitbucket.org/pqstudio/go-webutils/logger"
 )
 
 func Transact(db *sql.DB, txFunc func(*sql.Tx) error) (err error) {
@@ -15,7 +17,7 @@ func Transact(db *sql.DB, txFunc func(*sql.Tx) error) (err error) {
 			case error:
 				err = p
 			default:
-				err = fmt.Errorf("%s", p)
+				err = Log.Error("%s", p)
 			}
 		}
 		if err != nil {
