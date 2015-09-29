@@ -17,7 +17,7 @@ func Transact(db *sql.DB, txFunc func(*sql.Tx) error) (err error) {
 			case error:
 				err = p
 			default:
-				err = Log.Error("%s", p)
+				err = Log.Error("%+v", p)
 			}
 		}
 		if err != nil {
