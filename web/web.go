@@ -75,6 +75,15 @@ func Fields(c *gin.Context) []string {
 	return fields
 }
 
+func FromJSONString(data string, obj interface{}) error {
+	byt := []byte(data)
+	if err := json.Unmarshal(byt, obj); err != nil {
+		Log.Debug("%+v", err)
+		return &SerializationError{Message: "deserialization_error"}
+	}
+	return nil
+}
+
 func Whitelist(from interface{}, fields []string) map[string]interface{} {
 	out := make(map[string]interface{})
 
