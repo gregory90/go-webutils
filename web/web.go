@@ -1,9 +1,8 @@
 package web
 
 import (
-	"encoding/json"
-	//"errors"
 	"bytes"
+	"encoding/json"
 	"io"
 	"mime/multipart"
 	"net/http"
@@ -13,8 +12,6 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-
-	"github.com/gorilla/context"
 
 	"bitbucket.org/pqstudio/go-webutils/slice"
 
