@@ -137,31 +137,53 @@ func ToWhitelistedJSON(w http.ResponseWriter, obj interface{}, fields []string) 
 }
 
 func Whitelist(from interface{}, fields []string) (map[string]interface{}, error) {
-	out := make(map[string]interface{})
+	if len(fields) > 0 && fields[0] != "" {
+		out := make(map[string]interface{})
 
-	var v reflect.Value
-	var t reflect.Type
-	v = reflect.ValueOf(from)
-	t = reflect.TypeOf(from)
+		var v reflect.Value
+		var t reflect.Type
+		v = reflect.ValueOf(from)
+		t = reflect.TypeOf(from)
 
-	if reflect.Ptr == t.Kind() {
-		v = v.Elem()
-		t = t.Elem()
+		if reflect.Ptr == t.Kind() {
+			v = v.Elem()
+			t = t.Elem()
+		}
+
+		for i := 0; i < v.NumField(); i++ {
+			valueOfField := v.Field(i)
+			typeOfField := t.Field(i)
+
+			val := valueOfField.Interface()
+			name := strings.Split(typeOfField.Tag.Get("json"), ",")[0]
+
+			if slice.StringInSlice(name, fields) {
+				out[name] = val
+			}
+		}
+		return out, nil
 	}
+	return out, nil
+}
 
-	for i := 0; i < v.NumField(); i++ {
-		valueOfField := v.Field(i)
-		typeOfField := t.Field(i)
+func WhitelistArray(objs []interface{}, fields []string) ([]interface{}, error) {
+	if len(objs) > 0 {
+		if len(fields) > 0 && fields[0] != "" {
+			var out []interface{}
 
-		val := valueOfField.Interface()
-		name := strings.Split(typeOfField.Tag.Get("json"), ",")[0]
+			for _, value := range objs {
+				r, err := Whitelist(value, fields)
+				if err != nil {
+					return nil, err
+				}
 
-		if slice.StringInSlice(name, fields) {
-			out[name] = val
+				out = append(out, r)
+			}
+
+			return out, nil
 		}
 	}
-
-	return out, nil
+	return objs, nil
 }
 
 func ToWhitelistedArrayJSON(w http.ResponseWriter, objs []interface{}, fields []string) error {
