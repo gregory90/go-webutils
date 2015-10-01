@@ -75,64 +75,6 @@ func Fields(c *gin.Context) []string {
 	return fields
 }
 
-func Bind(r io.ReadCloser, obj Model) error {
-	err := FromJSON(r, obj)
-	if err != nil {
-		return err
-	}
-
-	if errors := obj.Validate(); errors != nil {
-		return &ValidationError{
-			Errors: errors,
-		}
-	}
-	return nil
-}
-
-func FromJSON(r io.ReadCloser, obj Model) error {
-	defer r.Close()
-	if err := json.NewDecoder(r).Decode(obj); err != nil {
-		return &SerializationError{Message: "deserialization_error"}
-	}
-	return nil
-}
-
-func FromJSONStrict(r io.ReadCloser, obj interface{}) error {
-	defer r.Close()
-	if err := json.NewDecoder(r).Decode(obj); err != nil {
-		Log.Debug("%+v", err)
-		return &SerializationError{Message: "deserialization_error"}
-	}
-	return nil
-}
-
-func FromJSONString(data string, obj interface{}) error {
-	byt := []byte(data)
-	if err := json.Unmarshal(byt, obj); err != nil {
-		Log.Debug("%+v", err)
-		return &SerializationError{Message: "deserialization_error"}
-	}
-	return nil
-}
-
-func ToJSON(w http.ResponseWriter, obj interface{}) error {
-	if err := json.NewEncoder(w).Encode(obj); err != nil {
-		return &SerializationError{Message: "serialization_error"}
-	}
-	return nil
-}
-
-func ToWhitelistedJSON(w http.ResponseWriter, obj interface{}, fields []string) error {
-	if len(fields) > 0 && fields[0] != "" {
-		res := Whitelist(obj, fields)
-
-		ToJSON(w, &res)
-		return nil
-	}
-	ToJSON(w, &obj)
-	return nil
-}
-
 func Whitelist(from interface{}, fields []string) map[string]interface{} {
 	out := make(map[string]interface{})
 
@@ -181,25 +123,6 @@ func WhitelistArray(objs []interface{}, fields []string) []interface{} {
 	return objs
 }
 
-func ToWhitelistedArrayJSON(w http.ResponseWriter, objs []interface{}, fields []string) error {
-	if len(objs) > 0 {
-		if len(fields) > 0 && fields[0] != "" {
-			var out []interface{}
-
-			for _, value := range objs {
-				r := Whitelist(value, fields)
-
-				out = append(out, r)
-			}
-
-			ToJSON(w, &out)
-			return nil
-		}
-	}
-	ToJSON(w, &objs)
-	return nil
-}
-
 type nopCloser struct {
 	io.Reader
 }
@@ -208,16 +131,6 @@ func (nopCloser) Close() error { return nil }
 func StringToReadCloser(data string) io.ReadCloser {
 
 	return nopCloser{bytes.NewBufferString(data)}
-}
-
-func ContextS(r *http.Request, key string) string {
-	return string(context.Get(r, key).(string))
-}
-
-func ContextI(r *http.Request, key string) int {
-	i, err := strconv.Atoi(string(context.Get(r, key).(string)))
-	Log.Error(err.Error())
-	return i
 }
 
 func A(m map[string]interface{}, key string, message string) bool {
