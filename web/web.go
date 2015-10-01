@@ -54,9 +54,9 @@ func GetClientIP(r *http.Request) string {
 	return strings.Split(r.RemoteAddr, ":")[0]
 }
 
-func LimitAndOffset(r *http.Request) (int, int) {
-	limit, _ := strconv.Atoi(r.FormValue("limit"))
-	offset, _ := strconv.Atoi(r.FormValue("offset"))
+func LimitAndOffset(c *gin.Context) (int, int) {
+	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
+	offset, _ := strconv.Atoi(c.DefaultQuery("offset", "0"))
 
 	if limit == 0 {
 		limit = 10
