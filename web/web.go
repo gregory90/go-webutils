@@ -12,6 +12,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/gin-gonic/gin"
+
 	"github.com/gorilla/context"
 
 	"bitbucket.org/pqstudio/go-webutils/slice"
@@ -67,8 +69,8 @@ func LimitAndOffset(r *http.Request) (int, int) {
 	return limit, offset
 }
 
-func Fields(r *http.Request) []string {
-	fields := strings.Split(r.FormValue("fields"), ",")
+func Fields(c *gin.Context) []string {
+	fields := strings.Split(c.Query("fields"), ",")
 
 	return fields
 }
