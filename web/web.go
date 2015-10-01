@@ -124,10 +124,7 @@ func ToJSON(w http.ResponseWriter, obj interface{}) error {
 
 func ToWhitelistedJSON(w http.ResponseWriter, obj interface{}, fields []string) error {
 	if len(fields) > 0 && fields[0] != "" {
-		res, err := Whitelist(obj, fields)
-		if err != nil {
-			return err
-		}
+		res := Whitelist(obj, fields)
 
 		ToJSON(w, &res)
 		return nil
@@ -136,7 +133,7 @@ func ToWhitelistedJSON(w http.ResponseWriter, obj interface{}, fields []string) 
 	return nil
 }
 
-func Whitelist(from interface{}, fields []string) (map[string]interface{}, error) {
+func Whitelist(from interface{}, fields []string) map[string]interface{} {
 	out := make(map[string]interface{})
 
 	var v reflect.Value
@@ -164,27 +161,24 @@ func Whitelist(from interface{}, fields []string) (map[string]interface{}, error
 			out[name] = val
 		}
 	}
-	return out, nil
+	return out
 }
 
-func WhitelistArray(objs []interface{}, fields []string) ([]interface{}, error) {
+func WhitelistArray(objs []interface{}, fields []string) []interface{} {
 	if len(objs) > 0 {
 		if len(fields) > 0 && fields[0] != "" {
 			var out []interface{}
 
 			for _, value := range objs {
-				r, err := Whitelist(value, fields)
-				if err != nil {
-					return nil, err
-				}
+				r := Whitelist(value, fields)
 
 				out = append(out, r)
 			}
 
-			return out, nil
+			return out
 		}
 	}
-	return objs, nil
+	return objs
 }
 
 func ToWhitelistedArrayJSON(w http.ResponseWriter, objs []interface{}, fields []string) error {
@@ -193,10 +187,7 @@ func ToWhitelistedArrayJSON(w http.ResponseWriter, objs []interface{}, fields []
 			var out []interface{}
 
 			for _, value := range objs {
-				r, err := Whitelist(value, fields)
-				if err != nil {
-					return err
-				}
+				r := Whitelist(value, fields)
 
 				out = append(out, r)
 			}
