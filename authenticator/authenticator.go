@@ -1,10 +1,13 @@
 package authenticator
 
 import (
-	"code.google.com/p/rsc/qr"
 	"crypto/rand"
 	"encoding/base32"
 	"encoding/base64"
+	"strings"
+
+	"code.google.com/p/rsc/qr"
+	"github.com/dgryski/dgoogauth"
 )
 
 func randStr(strSize int, randType string) string {
@@ -46,4 +49,22 @@ func GenerateNewSecretAndImage(issuer string) (string, string, error) {
 	str := base64.StdEncoding.EncodeToString(imgByte)
 
 	return secret, str, nil
+}
+
+func IsTokenValid(tokenSecret string, token string) bool {
+	otpConfig := &dgoogauth.OTPConfig{
+		Secret:      strings.TrimSpace(tokenSecret),
+		WindowSize:  3,
+		HotpCounter: 0,
+	}
+
+	trimmedToken := strings.TrimSpace(token)
+
+	// Validate token
+	ok, err := otpConfig.Authenticate(trimmedToken)
+
+	if err != nil || !ok {
+		return false
+	}
+	return true
 }
