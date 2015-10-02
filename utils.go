@@ -13,7 +13,6 @@ import (
 	"github.com/PuerkitoBio/throttled"
 	"github.com/PuerkitoBio/throttled/store"
 	"github.com/gorilla/context"
-	router "github.com/zenazn/goji/web"
 
 	. "bitbucket.org/pqstudio/go-webutils/logger"
 )
