@@ -2,52 +2,52 @@ package web
 
 // validation error
 type ValidationError struct {
-	Message string      `json:"message,omitempty"`
-	Errors  interface{} `json:"errors,omitempty"`
+	Error  string      `json:"error,omitempty"`
+	Fields interface{} `json:"fields,omitempty"`
 }
 
 func (e *ValidationError) Error() string {
-	return e.Message
+	return e.Error
 }
 
 // serialization error
 type SerializationError struct {
-	Message string `json:"message"`
+	Error string `json:"error"`
 }
 
 func (e *SerializationError) Error() string {
-	return e.Message
+	return e.Error
 }
 
-// messages
+// errors
 type NotFound struct {
-	Message string `json:"-"`
+	Error string `json:"-"`
 }
 
 func (e *NotFound) Error() string {
-	return e.Message
+	return e.Error
 }
 
 type NoContent struct {
-	Message string `json:"-"`
+	Error string `json:"-"`
 }
 
 func (e *NoContent) Error() string {
-	return e.Message
+	return e.Error
 }
 
 type Forbidden struct {
-	Message string `json:"message"`
+	Error string `json:"error"`
 }
 
 func (e *Forbidden) Error() string {
-	return e.Message
+	return e.Error
 }
 
 type BadRequest struct {
-	Message string `json:"message"`
+	Error string `json:"error"`
 }
 
 func (e *BadRequest) Error() string {
-	return e.Message
+	return e.Error
 }
