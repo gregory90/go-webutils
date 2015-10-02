@@ -61,7 +61,6 @@ func (fn handleErr) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func HttpError(w http.ResponseWriter, err error, status int) {
 	if err != nil {
 		w.WriteHeader(status)
-		web.ToJSON(w, err)
 	} else {
 		w.WriteHeader(status)
 	}

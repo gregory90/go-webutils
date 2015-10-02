@@ -12,7 +12,6 @@ import (
 	"code.google.com/p/go-uuid/uuid"
 	"github.com/PuerkitoBio/throttled"
 	"github.com/PuerkitoBio/throttled/store"
-	"github.com/gorilla/context"
 
 	. "bitbucket.org/pqstudio/go-webutils/logger"
 )
