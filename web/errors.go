@@ -37,11 +37,11 @@ func (e *NoContent) Error() string {
 }
 
 type Forbidden struct {
-	Message string `json:"-"`
+	Message string `json:"message"`
 }
 
 func (e *Forbidden) Error() string {
-	return "Forbidden"
+	return e.Message
 }
 
 type BadRequest struct {
