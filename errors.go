@@ -25,7 +25,7 @@ func (fn handleErr) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		switch e := err.(type) {
 		case *web.ValidationError:
 			err := err.(*web.ValidationError)
-			err.Message = "validation_error"
+			err.ErrorType = "validation_error"
 			Log.Debug(e.Error())
 			HttpError(w, err, 422)
 			return
