@@ -16,7 +16,6 @@ import (
 func RateLimitCustom(r *http.Request) string {
 	IP := web.GetClientIP(r)
 
-	Log.Debug("%s", IP)
 	p := r.URL.Path
 
 	return IP + p
