@@ -5,7 +5,6 @@ import (
 	"encoding/hex"
 	"net/http"
 	"strings"
-	"time"
 
 	"bitbucket.org/pqstudio/go-webutils/web"
 
