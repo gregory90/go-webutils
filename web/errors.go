@@ -10,6 +10,10 @@ func (e *ValidationError) Error() string {
 	return e.ErrorType
 }
 
+func NewValidationError(fields interface{}) *ValidationError {
+	return &ValidationError{ErrorType: "validation_error", Fields: fields}
+}
+
 // serialization error
 type SerializationError struct {
 	ErrorType string `json:"error"`
