@@ -9,8 +9,6 @@ import (
 	"bitbucket.org/pqstudio/go-webutils/web"
 
 	"code.google.com/p/go-uuid/uuid"
-
-	. "bitbucket.org/pqstudio/go-webutils/logger"
 )
 
 func RateLimitCustom(r *http.Request) string {
