@@ -23,6 +23,14 @@ func (e *SerializationError) Error() string {
 	return e.ErrorType
 }
 
+func NewSerializationError() *SerializationError {
+	return &SerializationError{ErrorType: "serialization_error"}
+}
+
+func NewDeserializationError() *SerializationError {
+	return &SerializationError{ErrorType: "deserialization_error"}
+}
+
 // errors
 type NotFound struct {
 	ErrorType string `json:"-"`
