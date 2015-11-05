@@ -13,9 +13,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"bitbucket.org/pqstudio/go-webutils/slice"
+	"github.com/gregory90/go-webutils/slice"
 
-	. "bitbucket.org/pqstudio/go-webutils/logger"
+	. "github.com/gregory90/go-webutils/logger"
 )
 
 type Model interface {

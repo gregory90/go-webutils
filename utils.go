@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strings"
 
-	"bitbucket.org/pqstudio/go-webutils/web"
+	"github.com/gregory90/go-webutils/web"
 
 	"code.google.com/p/go-uuid/uuid"
 )
