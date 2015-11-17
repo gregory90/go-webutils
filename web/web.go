@@ -74,6 +74,10 @@ func SortFieldAndDirection(fields []string) (string, string) {
 		sortField = "createdAt"
 	}
 
+	if !slice.StringInSlice(sortDir, []string{"desc", "asc", "DESC", "ASC"}) {
+		sortDir = "DESC"
+	}
+
 	return sortDir, sortField
 }
 
