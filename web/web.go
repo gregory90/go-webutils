@@ -66,6 +66,17 @@ func LimitAndOffset(c *gin.Context) (int, int) {
 	return limit, offset
 }
 
+func SortFieldAndDirection(fields []string) (string, string) {
+	sortDir := c.DefaultQuery("sortDir", "DESC")
+	sortField := c.DefaultQuery("sortField", "createdAt")
+
+	if !slice.StringInSlice(sortField, fields) {
+		sortField = "createdAt"
+	}
+
+	return sortDir, sortField
+}
+
 func Fields(c *gin.Context) []string {
 	fields := strings.Split(c.Query("fields"), ",")
 
