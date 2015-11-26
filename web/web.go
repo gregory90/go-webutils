@@ -81,14 +81,14 @@ func SortFieldAndDirection(c *gin.Context, fields []string) (string, string) {
 	return sortDir, sortField
 }
 
-func Lang(c *gin.Context, locales []string, defaultLocale string) string {
-	lang := c.DefaultQuery("lang", defaultLocale)
+func Locale(c *gin.Context, locales []string, defaultLocale string) string {
+	locale := c.DefaultQuery("locale", defaultLocale)
 
 	if !slice.StringInSlice(lang, locales) {
-		lang = defaultLocale
+		locale = defaultLocale
 	}
 
-	return lang
+	return locale
 }
 
 func Fields(c *gin.Context) []string {
