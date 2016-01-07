@@ -63,3 +63,11 @@ type BadRequest struct {
 func (e *BadRequest) Error() string {
 	return e.ErrorType
 }
+
+type InternalRequestError struct {
+	ErrorType string `json:"error"`
+}
+
+func (e *InternalRequestError) Error() string {
+	return e.ErrorType
+}
