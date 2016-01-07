@@ -38,8 +38,10 @@ func Transact(db *sql.DB, txFunc func(*sql.Tx) error) (err error) {
 				if v.Number == 1213 {
 					return attempt < 5, err.(error)
 				}
-			default:
+			case error:
 				return false, err.(error)
+			default:
+				return false, nil
 			}
 		}
 		return false, err.(error)
