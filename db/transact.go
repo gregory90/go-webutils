@@ -30,7 +30,7 @@ func Transact(db *sql.DB, txFunc func(*sql.Tx) error) (err error) {
 		err = tx.Commit()
 	}()
 	err = try.Do(func(attempt int) (bool, error) {
-		var err error
+		var err interface{}
 		err = txFunc(tx)
 		if err != nil {
 			switch v := err.(type) {
@@ -42,6 +42,7 @@ func Transact(db *sql.DB, txFunc func(*sql.Tx) error) (err error) {
 				return false, err
 			}
 		}
+		return false, err
 	})
 	return err
 }
