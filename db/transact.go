@@ -44,7 +44,7 @@ func Transact(db *sql.DB, txFunc func(*sql.Tx) error) (err error) {
 				return false, nil
 			}
 		}
-		return false, err.(error)
+		return false, nil
 	})
 	return err
 }
