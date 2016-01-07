@@ -2,6 +2,7 @@ package utils
 
 import (
 	"crypto/md5"
+	"encoding/base64"
 	"encoding/hex"
 	"net/http"
 	"strings"
@@ -28,4 +29,8 @@ func NewUUID() string {
 func GetMD5Hash(text string) string {
 	hash := md5.Sum([]byte(text))
 	return hex.EncodeToString(hash[:])
+}
+
+func Base64Encode(text string) string {
+	return base64.StdEncoding.EncodeToString([]byte(data))
 }
