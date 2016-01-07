@@ -31,6 +31,6 @@ func GetMD5Hash(text string) string {
 	return hex.EncodeToString(hash[:])
 }
 
-func Base64Encode(text string) string {
+func Base64Encode(data string) string {
 	return base64.StdEncoding.EncodeToString([]byte(data))
 }
