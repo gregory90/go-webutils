@@ -32,10 +32,16 @@ func Transact(db *sql.DB, txFunc func(*sql.Tx) error) (err error) {
 	err = try.Do(func(attempt int) (bool, error) {
 		var err error
 		err = txFunc(tx)
-		if err != nil && err.(*mysql.MySQLError).Number == 1213 {
-			return attempt < 5, err
+		if err != nil {
+			switch v := err.(type) {
+			case mysql.MySQLError:
+				if err.(*mysql.MySQLError).Number == 1213 {
+					return attempt < 5, err
+				}
+			default:
+				return false, err
+			}
 		}
-		return false, err
 	})
 	return err
 }
