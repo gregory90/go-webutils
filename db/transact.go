@@ -35,7 +35,7 @@ func Transact(db *sql.DB, txFunc func(*sql.Tx) error) (err error) {
 		if err != nil {
 			switch v := err.(type) {
 			case mysql.MySQLError:
-				if err.(*mysql.MySQLError).Number == 1213 {
+				if v.Number == 1213 {
 					return attempt < 5, err.(error)
 				}
 			default:
