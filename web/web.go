@@ -106,6 +106,11 @@ func FromJSONString(data string, obj interface{}) error {
 	return nil
 }
 
+func ToJSONString(obj interface{}) (string, error) {
+	b, err := json.Marshal(obj)
+	return string(b), err
+}
+
 func Whitelist(from interface{}, fields []string) map[string]interface{} {
 	out := make(map[string]interface{})
 
