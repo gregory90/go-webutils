@@ -41,5 +41,5 @@ func GetSHA1Hash(data string) string {
 	h.Write([]byte(data))
 	bs := h.Sum(nil)
 
-	return bs
+	return string(bs)
 }
