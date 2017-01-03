@@ -4,6 +4,7 @@ import (
 	"io"
 
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 )
 
@@ -12,7 +13,7 @@ func Upload(region string, bucket string, path string, file io.ReadSeeker) error
 		Region:           aws.String(region),
 		S3ForcePathStyle: aws.Bool(true),
 	}
-	svc := s3.New(config)
+	svc := s3.New(session.New(), config)
 
 	params := &s3.PutObjectInput{
 		Bucket: aws.String(bucket),
@@ -29,7 +30,7 @@ func Get(region string, bucket string, path string) (io.ReadCloser, error) {
 		Region:           aws.String(region),
 		S3ForcePathStyle: aws.Bool(true),
 	}
-	svc := s3.New(config)
+	svc := s3.New(session.New(), config)
 
 	params := &s3.GetObjectInput{
 		Bucket: aws.String(bucket),
@@ -45,7 +46,7 @@ func Delete(region string, bucket string, path string) error {
 		Region:           aws.String(region),
 		S3ForcePathStyle: aws.Bool(true),
 	}
-	svc := s3.New(config)
+	svc := s3.New(session.New(), config)
 
 	params := &s3.DeleteObjectInput{
 		Bucket: aws.String(bucket),
