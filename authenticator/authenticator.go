@@ -6,8 +6,8 @@ import (
 	"encoding/base64"
 	"strings"
 
-	"code.google.com/p/rsc/qr"
 	"github.com/dgryski/dgoogauth"
+	"github.com/mdp/rsc"
 )
 
 func randStr(strSize int, randType string) string {

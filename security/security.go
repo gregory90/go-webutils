@@ -1,13 +1,13 @@
 package security
 
 import (
-	"code.google.com/p/go-uuid/uuid"
+	"github.com/satori/go.uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
 // Return generated password end salt
 func GenerateHashAndSalt(plainPassword string, cost int) (string, string, error) {
-	salt := uuid.New()
+	salt := uuid.NewV4().String()
 
 	hash, err := bcrypt.GenerateFromPassword([]byte(plainPassword+salt), cost)
 	if err != nil {
