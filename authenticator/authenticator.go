@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/dgryski/dgoogauth"
-	"github.com/mdp/rsc"
+	"github.com/mdp/rsc/qr"
 )
 
 func randStr(strSize int, randType string) string {
