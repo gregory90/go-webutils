@@ -10,7 +10,7 @@ import (
 
 	"github.com/gregory90/go-webutils/web"
 
-	"code.google.com/p/go-uuid/uuid"
+	"github.com/satori/go.uuid"
 )
 
 func RateLimitCustom(r *http.Request) string {
@@ -22,7 +22,7 @@ func RateLimitCustom(r *http.Request) string {
 }
 
 func NewUUID() string {
-	uuid := uuid.New()
+	uuid := uuid.NewV4().String()
 
 	return strings.Replace(uuid, "-", "", -1)
 }
