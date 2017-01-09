@@ -59,8 +59,8 @@ func LimitAndOffset(c *gin.Context) (int, int) {
 		limit = 10
 	}
 
-	if limit > 500 {
-		limit = 500
+	if limit > 1000 {
+		limit = 1000
 	}
 
 	return limit, offset
